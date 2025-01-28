@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grinder/applied_jobs_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -20,22 +21,37 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    // final size  = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AppliedJobsPage()));
+              },
+              icon: Icon(Icons.arrow_forward_ios))
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           spacing: 25,
           children: [
-            Icon(Icons.sentiment_neutral, size: 200),
+            // Image.asset('assets/congrats.png', height: size.height* 0.4,),
+            Icon(
+              Icons.sentiment_satisfied,
+              size: 200,
+            ),
             Text(
-              "No jobs yet!",
+              "Found a job of interest?",
               style: theme.textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              "Add jobs you’ve applied to and keep track of their progress.",
+              "Add it here so you can keep track of its progress.",
             ),
             FilledButton.tonal(
               onPressed: () => _showAddJobDialog(context),
@@ -63,13 +79,19 @@ class JobForm extends StatefulWidget {
 class JobFormState extends State<JobForm> {
   final _formKey = GlobalKey<FormState>();
   String? _position, _companyName, _jobLocation, _jobStatus, _jobType;
-  final List<String> _jobTypes = ['Full-time', 'Part-time', 'Contract', 'Internship'];
+  final List<String> _jobTypes = [
+    'Full-time',
+    'Part-time',
+    'Contract',
+    'Internship'
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16), // Added padding for more space
-      constraints: BoxConstraints(maxWidth: 400), // Optional: Restrict form width for better layout
+      constraints: BoxConstraints(
+          maxWidth: 400), // Optional: Restrict form width for better layout
       child: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -80,22 +102,29 @@ class JobFormState extends State<JobForm> {
               TextFormField(
                 decoration: InputDecoration(labelText: 'Position'),
                 onSaved: (value) => _position = value,
-                validator: (value) => value?.isEmpty ?? true ? 'Please enter a position' : null,
+                validator: (value) =>
+                    value?.isEmpty ?? true ? 'Please enter a position' : null,
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Company Name'),
                 onSaved: (value) => _companyName = value,
-                validator: (value) => value?.isEmpty ?? true ? 'Please enter the company name' : null,
+                validator: (value) => value?.isEmpty ?? true
+                    ? 'Please enter the company name'
+                    : null,
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Job Location'),
                 onSaved: (value) => _jobLocation = value,
-                validator: (value) => value?.isEmpty ?? true ? 'Please enter the job location' : null,
+                validator: (value) => value?.isEmpty ?? true
+                    ? 'Please enter the job location'
+                    : null,
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Job Status'),
                 onSaved: (value) => _jobStatus = value,
-                validator: (value) => value?.isEmpty ?? true ? 'Please enter the job status' : null,
+                validator: (value) => value?.isEmpty ?? true
+                    ? 'Please enter the job status'
+                    : null,
               ),
               DropdownButtonFormField<String>(
                 value: _jobType,
@@ -112,7 +141,8 @@ class JobFormState extends State<JobForm> {
                     child: Text(type),
                   );
                 }).toList(),
-                validator: (value) => value == null ? 'Please select a job type' : null,
+                validator: (value) =>
+                    value == null ? 'Please select a job type' : null,
               ),
               const SizedBox(height: 20),
               FilledButton(
@@ -122,7 +152,9 @@ class JobFormState extends State<JobForm> {
                     // Handle form submission logic here
                     Navigator.of(context).pop(); // Close the dialog
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Job added: $_position at $_companyName')),
+                      SnackBar(
+                          content:
+                              Text('Job added: $_position at $_companyName')),
                     );
                   }
                 },
