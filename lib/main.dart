@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:grinder/homepage.dart';
+import 'theme.dart'; // Import the theme file
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+       final brightness = MediaQuery.of(context).platformBrightness;
+    TextTheme textTheme = Theme.of(context).textTheme;
+    MaterialTheme theme = MaterialTheme(textTheme);
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const HomePage(),
+     theme: brightness == Brightness.dark ? theme.dark() : theme.light(), // Set dark theme
+      themeMode: ThemeMode.system, // Automatically switch based on the system theme
+      home: HomePage(),
     );
   }
 }
-
