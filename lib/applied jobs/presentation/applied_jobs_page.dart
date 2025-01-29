@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grinder/applied%20jobs/widgets/job_card.dart';
 
 class AppliedJobsPage extends StatelessWidget {
   const AppliedJobsPage({super.key});
@@ -8,12 +9,16 @@ class AppliedJobsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("Applied Jobs")),
       body: ListView.builder(
-          itemCount: 2,
+          itemCount: 20,
           itemBuilder: (context, index) {
-            return Card(
-              child: Column(
-                children: [Text("Welcome")],
-              ),
+            return JobCard(
+              company: 'Lumis Softwares',
+              position: 'Flutter Developer',
+              date: 'July 17, 2024',
+              location: 'Remote',
+              jobType: 'Full-time',
+              status: 'Applied',
+              onEdit: (){},
             );
           }),
     );

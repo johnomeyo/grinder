@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:grinder/homepage.dart';
+// import 'package:grinder/homepage.dart';
+import 'package:grinder/homepage/presentation/homescreen.dart';
 import 'theme.dart'; // Import the theme file
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
      theme: brightness == Brightness.dark ? theme.dark() : theme.light(), // Set dark theme
       themeMode: ThemeMode.system, // Automatically switch based on the system theme
-      home: HomePage(),
+      home: Homescreen(),
     );
   }
 }

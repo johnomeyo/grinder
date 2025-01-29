@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:grinder/applied_jobs_page.dart';
+import 'package:grinder/applied%20jobs/presentation/applied_jobs_page.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class AddJobPage extends StatelessWidget {
+  const AddJobPage({super.key});
 
   // Function to show the AlertDialog
   void _showAddJobDialog(BuildContext context) {
@@ -23,16 +23,6 @@ class HomePage extends StatelessWidget {
     final theme = Theme.of(context);
     // final size  = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AppliedJobsPage()));
-              },
-              icon: Icon(Icons.arrow_forward_ios))
-        ],
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
