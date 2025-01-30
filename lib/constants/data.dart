@@ -15,7 +15,7 @@ var data = [
     date: 'July 17, 2024',
     location: 'Remote',
     jobType: 'Full-time',
-    status: 'Applied',
+    status: 'Interviewing',
     onEdit: () {},
     company: 'Google',
   ),
@@ -25,7 +25,7 @@ var data = [
     date: 'July 17, 2024',
     location: 'Remote',
     jobType: 'Full-time',
-    status: 'Applied',
+    status: 'Rejected',
     onEdit: () {},
   ),
   JobCard(
@@ -34,7 +34,7 @@ var data = [
     date: 'July 17, 2024',
     location: 'Remote',
     jobType: 'Full-time',
-    status: 'Applied',
+    status: 'Interviewing',
     onEdit: () {},
   ),
 ];

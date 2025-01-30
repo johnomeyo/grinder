@@ -72,7 +72,20 @@ class JobCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               FilledButton.tonal(
-                onPressed: () {}, // Can be modified to trigger a status change
+                onPressed: () {},
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(
+                    status == 'Applied'
+                        ? Colors.blue
+                        : status == "Interviewing"
+                            ? Colors.orangeAccent
+                            : status == 'Rejected'
+                                ? Colors.red
+                                : status == "Accepted"
+                                ? Colors.green
+                                : Colors.grey, // Default color
+                  ),
+                ),
                 child: Text(status),
               ),
               IconButton(
