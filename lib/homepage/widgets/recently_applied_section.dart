@@ -12,15 +12,7 @@ class RecentlyAppliedSection extends StatelessWidget {
         scrollDirection: Axis.horizontal, // Enables horizontal scrolling
         child: Row(
           children: [
-            JobCard(
-              company: 'Lumis Softwares',
-              position: 'Flutter Developer',
-              date: 'July 17, 2024',
-              location: 'Remote',
-              jobType: 'Full-time',
-              status: 'Applied',
-              onEdit: () {},
-            ),
+            
             SizedBox(width: 12), 
             JobCard(
               company: 'Lumis Softwares',

@@ -30,28 +30,25 @@ class JobCard extends StatelessWidget {
       child: Card(
         elevation: 3,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: onTap, // Allows tapping the card
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeader(theme),
-                const SizedBox(height: 12),
-                Text(
-                  company,
-                  style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  position,
-                  style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
-                ),
-                const SizedBox(height: 12),
-                _buildDetailsRow(),
-              ],
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeader(theme),
+              const SizedBox(height: 12),
+              Text(
+                company,
+                style: theme.textTheme.titleMedium
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                position,
+                style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+              ),
+              const SizedBox(height: 12),
+              _buildDetailsRow(),
+            ],
           ),
         ),
       ),
@@ -64,15 +61,10 @@ class JobCard extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 20,
-          backgroundColor: theme.colorScheme.primary,
-          child: Text(
-            company[0].toUpperCase(),
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          backgroundColor: theme.colorScheme.inversePrimary,
+          child: Text(company[0].toUpperCase(),
+              style: theme.textTheme.bodyLarge
+                  ?.copyWith(fontWeight: FontWeight.bold)),
         ),
         const SizedBox(width: 12),
         Expanded(

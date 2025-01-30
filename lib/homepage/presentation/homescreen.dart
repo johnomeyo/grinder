@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:grinder/applied%20jobs/widgets/job_card.dart';
 import 'package:grinder/homepage/widgets/empty_section_card.dart';
-import 'package:grinder/homepage/widgets/recently_applied_section.dart';
 import 'package:grinder/homepage/widgets/statistics_widget.dart';
 import 'package:grinder/homepage/widgets/text_header.dart';
 import '../widgets/header_widget.dart';
@@ -24,7 +24,15 @@ class Homescreen extends StatelessWidget {
                   const HeaderWidget(),
                   StatisticsWidget(),
                   TextHeader(text: "Recently Applied"),
-                  // RecentlyAppliedSection(),
+                  JobCard(
+                    company: 'Lumis Softwares',
+                    position: 'Flutter Developer',
+                    date: 'July 17, 2024',
+                    location: 'Remote',
+                    jobType: 'Full-time',
+                    status: 'Applied',
+                    onEdit: () {},
+                  ),
                   EmptySectionCard(),
                 ],
               ),
