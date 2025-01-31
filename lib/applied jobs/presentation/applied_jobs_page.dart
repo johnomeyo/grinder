@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grinder/applied%20jobs/widgets/toggle_buttons.dart';
 import 'package:grinder/constants/data.dart';
 import 'package:grinder/applied%20jobs/widgets/job_card.dart';
+import 'package:grinder/models/job_model.dart';
 
 class AppliedJobsPage extends StatefulWidget {
   const AppliedJobsPage({super.key});
@@ -17,19 +18,21 @@ class _AppliedJobsPageState extends State<AppliedJobsPage> {
   final List<String> services = ["All", "Interviewing", "Accepted", "Rejected"];
 
   // Method to filter jobs based on selected category
-  List<JobCard> _getFilteredJobs() {
+  List<Job> _getFilteredJobs() {
     if (selectedServiceIndex == 0) {
       return data; // Return all jobs if "All" is selected
     }
 
     // Filter jobs based on selected status
-    return data.where((job) => job.status == services[selectedServiceIndex]).toList();
+    return data
+        .where((job) => job.jobStatus == services[selectedServiceIndex])
+        .toList();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    List<JobCard> filteredJobs = _getFilteredJobs(); // Get filtered job list
+    List<Job> filteredJobs = _getFilteredJobs(); // Get filtered job list
 
     return Scaffold(
       body: SafeArea(
@@ -67,7 +70,14 @@ class _AppliedJobsPageState extends State<AppliedJobsPage> {
                   : ListView.builder(
                       itemCount: filteredJobs.length,
                       itemBuilder: (context, index) {
-                        return filteredJobs[index]; // Show filtered job cards
+                        var job = filteredJobs[index];
+                        return JobCard(
+                            company: job.companyName,
+                            position: job.position,
+                            date: "",
+                            location: job.jobLocation,
+                            jobType: job.jobType,
+                            status: job.jobStatus); // Show filtered job cards
                       },
                     ),
             ),

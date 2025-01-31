@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
-import 'package:grinder/applied%20jobs/presentation/applied_jobs_page.dart';
+import 'package:grinder/models/job_model.dart';
+import 'package:grinder/services/crud_services.dart';
 
 class AddJobPage extends StatelessWidget {
   const AddJobPage({super.key});
@@ -78,6 +81,8 @@ class JobFormState extends State<JobForm> {
 
   @override
   Widget build(BuildContext context) {
+    final jobService = CrudService();
+
     return Container(
       padding: const EdgeInsets.all(16), // Added padding for more space
       constraints: BoxConstraints(
@@ -136,10 +141,20 @@ class JobFormState extends State<JobForm> {
               ),
               const SizedBox(height: 20),
               FilledButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState?.validate() ?? false) {
                     _formKey.currentState?.save();
                     // Handle form submission logic here
+
+                    final newJob = Job(
+                      position: _position ?? '',
+                      companyName: _companyName ?? '',
+                      jobLocation: _jobLocation ?? '',
+                      jobStatus: _jobStatus ?? "",
+                      jobType: _jobType ?? "",
+                    );
+                    await jobService.addJob(newJob);
+
                     Navigator.of(context).pop(); // Close the dialog
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
