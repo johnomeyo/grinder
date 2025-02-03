@@ -18,6 +18,12 @@ class ApplicationStatsChart extends StatelessWidget {
               leftTitles: AxisTitles(
                 sideTitles: SideTitles(showTitles: true, reservedSize: 40),
               ),
+              rightTitles: AxisTitles(
+                sideTitles: SideTitles(showTitles: false,),
+              ),
+              topTitles: AxisTitles(
+                sideTitles: SideTitles(showTitles: false, reservedSize: 40),
+              ),
               bottomTitles: AxisTitles(
                 sideTitles: SideTitles(
                   showTitles: true,

@@ -23,6 +23,12 @@ class ResponseTimeChart extends StatelessWidget {
             leftTitles: AxisTitles(
               sideTitles: SideTitles(showTitles: true),
             ),
+             rightTitles: AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+             topTitles: AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
           ),
           borderData: FlBorderData(show: false),
           lineBarsData: [

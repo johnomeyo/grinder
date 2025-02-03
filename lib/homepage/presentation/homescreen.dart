@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:grinder/applied%20jobs/widgets/job_card.dart';
 import 'package:grinder/homepage/widgets/bar_chart.dart';
 import 'package:grinder/homepage/widgets/line_chart.dart';
-import 'package:grinder/homepage/widgets/pie_chart.dart';
 import 'package:grinder/homepage/widgets/statistics_widget.dart';
 import 'package:grinder/homepage/widgets/text_header.dart';
 import '../widgets/header_widget.dart';
@@ -40,8 +39,6 @@ class Homescreen extends StatelessWidget {
                     ApplicationStatsChart(),
                     TextHeader(text: "Average Response Time"),
                     ResponseTimeChart(),
-                    TextHeader(text: "Job Application Breakdown"),
-                    ApplicationPieChart()
                   ],
                 ),
               ),

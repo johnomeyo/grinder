@@ -13,7 +13,7 @@ class TextHeader extends StatelessWidget {
       children: [
         Text(
           text,
-          style: theme.textTheme.headlineMedium
+          style: theme.textTheme.headlineSmall
               ?.copyWith(fontWeight: FontWeight.bold),
         ),
         TextButton(onPressed: () {
