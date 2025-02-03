@@ -15,7 +15,7 @@ class _AppliedJobsPageState extends State<AppliedJobsPage> {
   int selectedServiceIndex = 0;
 
   // List of filter options (must match toggle button list)
-  final List<String> services = ["All", "Interviewing", "Accepted", "Rejected"];
+  final List<String> services = ["All", "Interviewing", "Accepted", "Rejected",];
 
   // Method to filter jobs based on selected category
   List<Job> _getFilteredJobs() {
@@ -71,6 +71,7 @@ class _AppliedJobsPageState extends State<AppliedJobsPage> {
                       itemCount: filteredJobs.length,
                       itemBuilder: (context, index) {
                         var job = filteredJobs[index];
+                        print(filteredJobs);
                         return JobCard(
                             company: job.companyName,
                             position: job.position,
