@@ -3,6 +3,7 @@ import 'package:grinder/applied%20jobs/widgets/toggle_buttons.dart';
 import 'package:grinder/constants/data.dart';
 import 'package:grinder/applied%20jobs/widgets/job_card.dart';
 import 'package:grinder/models/job_model.dart';
+import 'package:grinder/services/crud_services.dart';
 
 class AppliedJobsPage extends StatefulWidget {
   const AppliedJobsPage({super.key});
@@ -12,19 +13,38 @@ class AppliedJobsPage extends StatefulWidget {
 }
 
 class _AppliedJobsPageState extends State<AppliedJobsPage> {
+  @override
+  void initState() {
+    super.initState();
+    _loadJobs(); // Load jobs when the page opens
+  }
+
+  void _loadJobs() async {
+    List<Job> jobs = CrudService().getAllJobs(); // Fetch latest data
+    setState(() {
+      data = jobs; // Update the `data` list
+    });
+  }
+
   int selectedServiceIndex = 0;
 
   // List of filter options (must match toggle button list)
-  final List<String> services = ["All", "Interviewing", "Accepted", "Rejected",];
+  final List<String> services = [
+    "All",
+    "Interviewing",
+    "Accepted",
+    "Rejected",
+  ];
 
   // Method to filter jobs based on selected category
   List<Job> _getFilteredJobs() {
+    List<Job> allJobs = data; // Fetch fresh data
+
     if (selectedServiceIndex == 0) {
-      return data; // Return all jobs if "All" is selected
+      return allJobs; // Return all jobs if "All" is selected
     }
 
-    // Filter jobs based on selected status
-    return data
+    return allJobs
         .where((job) => job.jobStatus == services[selectedServiceIndex])
         .toList();
   }
@@ -71,7 +91,6 @@ class _AppliedJobsPageState extends State<AppliedJobsPage> {
                       itemCount: filteredJobs.length,
                       itemBuilder: (context, index) {
                         var job = filteredJobs[index];
-                        print(filteredJobs);
                         return JobCard(
                             company: job.companyName,
                             position: job.position,
