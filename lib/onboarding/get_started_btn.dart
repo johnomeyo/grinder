@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:grinder/homepage/presentation/homescreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GetStartedBtn extends StatelessWidget {
   const GetStartedBtn({super.key});
+  Future<void> _completeOnboarding(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(
+        'hasSeenOnboarding', true); // Mark onboarding as completed
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (_) => const Homescreen()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +19,7 @@ class GetStartedBtn extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         child: FilledButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Homescreen()));
-          },
+          onPressed: () => _completeOnboarding(context),
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(
               horizontal: 40,
