@@ -24,18 +24,18 @@ class AddJobPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    // final size  = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           spacing: 25,
           children: [
-            // Image.asset('assets/congrats.png', height: size.height* 0.4,),
-            Icon(
-              Icons.sentiment_satisfied,
-              size: 200,
+            Image.asset(
+              'assets/c1.png',
+              height: size.height * 0.25,
             ),
             Text(
               "Found a job of interest?",
@@ -46,11 +46,12 @@ class AddJobPage extends StatelessWidget {
             Text(
               "Add it here so you can keep track of its progress.",
             ),
-            FilledButton.tonal(
+            OutlinedButton(
               onPressed: () => _showAddJobDialog(context),
               child: Text(
                 "Start Tracking Progress",
                 style: theme.textTheme.bodyLarge?.copyWith(
+                  // color: theme.colorScheme.inversePrimary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -72,6 +73,7 @@ class JobForm extends StatefulWidget {
 class JobFormState extends State<JobForm> {
   final _formKey = GlobalKey<FormState>();
   String? _position, _companyName, _jobLocation, _jobStatus, _jobType;
+
   final List<String> _jobTypes = [
     'Full-time',
     'Part-time',
@@ -79,14 +81,20 @@ class JobFormState extends State<JobForm> {
     'Internship'
   ];
 
+  final List<String> _jobStatuses = [
+    'Applied',
+    'Interviewing',
+    'Accepted',
+    'Rejected'
+  ];
+
   @override
   Widget build(BuildContext context) {
     final jobService = CrudService();
 
     return Container(
-      padding: const EdgeInsets.all(16), // Added padding for more space
-      constraints: BoxConstraints(
-          maxWidth: 400), // Optional: Restrict form width for better layout
+      padding: const EdgeInsets.all(16),
+      constraints: const BoxConstraints(maxWidth: 400),
       child: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -95,35 +103,46 @@ class JobFormState extends State<JobForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'Position'),
+                decoration: const InputDecoration(labelText: 'Position'),
                 onSaved: (value) => _position = value,
                 validator: (value) =>
                     value?.isEmpty ?? true ? 'Please enter a position' : null,
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Company Name'),
+                decoration: const InputDecoration(labelText: 'Company Name'),
                 onSaved: (value) => _companyName = value,
                 validator: (value) => value?.isEmpty ?? true
                     ? 'Please enter the company name'
                     : null,
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Job Location'),
+                decoration: const InputDecoration(labelText: 'Job Location'),
                 onSaved: (value) => _jobLocation = value,
                 validator: (value) => value?.isEmpty ?? true
                     ? 'Please enter the job location'
                     : null,
               ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Job Status'),
+              DropdownButtonFormField<String>(
+                value: _jobStatus,
+                decoration: const InputDecoration(labelText: 'Job Status'),
+                onChanged: (value) {
+                  setState(() {
+                    _jobStatus = value;
+                  });
+                },
                 onSaved: (value) => _jobStatus = value,
-                validator: (value) => value?.isEmpty ?? true
-                    ? 'Please enter the job status'
-                    : null,
+                items: _jobStatuses.map((status) {
+                  return DropdownMenuItem<String>(
+                    value: status,
+                    child: Text(status),
+                  );
+                }).toList(),
+                validator: (value) =>
+                    value == null ? 'Please select a job status' : null,
               ),
               DropdownButtonFormField<String>(
                 value: _jobType,
-                decoration: InputDecoration(labelText: 'Job Type'),
+                decoration: const InputDecoration(labelText: 'Job Type'),
                 onChanged: (value) {
                   setState(() {
                     _jobType = value;
@@ -140,11 +159,10 @@ class JobFormState extends State<JobForm> {
                     value == null ? 'Please select a job type' : null,
               ),
               const SizedBox(height: 20),
-              FilledButton(
+              ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState?.validate() ?? false) {
                     _formKey.currentState?.save();
-                    // Handle form submission logic here
 
                     final newJob = Job(
                       position: _position ?? '',
@@ -155,7 +173,7 @@ class JobFormState extends State<JobForm> {
                     );
                     await jobService.addJob(newJob);
 
-                    Navigator.of(context).pop(); // Close the dialog
+                    Navigator.of(context).pop();
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                           content:
@@ -163,7 +181,7 @@ class JobFormState extends State<JobForm> {
                     );
                   }
                 },
-                child: Text('Submit'),
+                child: const Text('Submit'),
               ),
             ],
           ),

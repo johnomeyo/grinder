@@ -61,7 +61,7 @@ class JobCard extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 20,
-          backgroundColor: theme.colorScheme.inversePrimary,
+          backgroundColor: theme.colorScheme.secondary,
           child: Text(company[0].toUpperCase(),
               style: theme.textTheme.bodyLarge
                   ?.copyWith(fontWeight: FontWeight.bold)),

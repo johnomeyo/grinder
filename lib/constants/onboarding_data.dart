@@ -1,23 +1,30 @@
 final List<Map<String, String>> onboardingData = [
   {
-    "image": "assets/glogo.png", // Replace with your asset
-    "text": "Welcome to Car Care!",
-    "title": "Book Services in One Tap",
+    "image": "assets/glogo.png", 
+    "text": "Welcome to Grinder!",
+    "title": "Track Your Job Applications Effortlessly",
     "subtitle":
-        "Find trusted repair shops, book appointments, and track your service history—all from one app.",
+        "Keep all your job applications in one place, monitor progress, and never miss an update.",
   },
   {
-    "image": "assets/congrats.png", // Replace with your asset
-    "text": "Explore our amazing features.",
-    "title": "Take Control of Your Car’s Health",
+    "image": "assets/track_progress.png", 
+    "text": "Stay Organized and Informed",
+    "title": "Know Where You Stand",
     "subtitle":
-        "Get real-time analysis of dashboard warnings, identify potential problems, and avoid costly repairs with expert recommendations.",
+        "Easily categorize applications, track responses, and get insights on your job search journey.",
   },
   {
-    "image": "assets/splash.png", // Replace with your asset
-    "text": "Get Started and enjoy!",
-    "title": "Diagnose Your Car Issues Instantly",
+    "image": "assets/analytics.png", 
+    "text": "Optimize Your Job Search",
+    "title": "Analyze Your Success Rate",
     "subtitle":
-        "Understand what those dashboard lights mean and get AI-powered insights to prevent bigger problems.",
+        "Get statistics on your applications, understand what works, and improve your chances of landing a job.",
+  },
+  {
+    "image": "assets/get_started.png", 
+    "text": "Let’s Get Started!",
+    "title": "Take Control of Your Career",
+    "subtitle":
+        "Start adding your job applications today and move closer to your dream job.",
   },
 ];
