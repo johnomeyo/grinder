@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class JobCard extends StatelessWidget {
   final String company;
   final String position;
-  final String date;
+  final DateTime date;
   final String location;
   final String jobType;
   final String status;
@@ -82,8 +83,8 @@ class JobCard extends StatelessWidget {
                             : status == 'Rejected'
                                 ? Colors.red
                                 : status == "Accepted"
-                                ? Colors.green
-                                : Colors.grey, // Default color
+                                    ? Colors.green
+                                    : Colors.grey, // Default color
                   ),
                 ),
                 child: Text(status),
@@ -105,7 +106,17 @@ class JobCard extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildIconText(Icons.calendar_month, date),
+        Row(
+          children: [
+            Icon(Icons.calendar_month_outlined,
+                size: 16, color: Colors.grey[600]),
+            const SizedBox(width: 4),
+            Text(
+              DateFormat('MMMM d, y').format(date),
+              style: TextStyle(fontSize: 14),
+            ),
+          ],
+        ),
         _buildIconText(Icons.location_on, location),
         _buildIconText(Icons.work_outline, jobType),
       ],

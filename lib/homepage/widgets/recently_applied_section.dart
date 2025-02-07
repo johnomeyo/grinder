@@ -17,7 +17,7 @@ class RecentlyAppliedSection extends StatelessWidget {
             JobCard(
               company: 'Lumis Softwares',
               position: 'Flutter Developer',
-              date: 'July 17, 2024',
+              date: DateTime.now(),
               location: 'Remote',
               jobType: 'Full-time',
               status: 'Applied',

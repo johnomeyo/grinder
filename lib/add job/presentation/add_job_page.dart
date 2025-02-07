@@ -170,6 +170,8 @@ class JobFormState extends State<JobForm> {
                       jobLocation: _jobLocation ?? '',
                       jobStatus: _jobStatus ?? "",
                       jobType: _jobType ?? "",
+                      jobDate: DateTime.now(), 
+                      
                     );
                     await jobService.addJob(newJob);
 

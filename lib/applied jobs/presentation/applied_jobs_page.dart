@@ -94,7 +94,7 @@ class _AppliedJobsPageState extends State<AppliedJobsPage> {
                         return JobCard(
                             company: job.companyName,
                             position: job.position,
-                            date: "",
+                            date: job.jobDate,
                             location: job.jobLocation,
                             jobType: job.jobType,
                             status: job.jobStatus); // Show filtered job cards

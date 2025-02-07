@@ -41,6 +41,7 @@ dependencies:
   flutter_native_splash: ^2.4.4
   smooth_page_indicator: ^1.2.0+3
   shared_preferences: ^2.5.1
+  intl: ^0.20.2
   
 
 dev_dependencies:
