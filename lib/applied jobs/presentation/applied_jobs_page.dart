@@ -55,6 +55,7 @@ class _AppliedJobsPageState extends State<AppliedJobsPage> {
     List<Job> filteredJobs = _getFilteredJobs(); // Get filtered job list
 
     return Scaffold(
+      // appBar: AppBar(),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
