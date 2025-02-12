@@ -17,30 +17,33 @@ class JobAdapter extends TypeAdapter<Job> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Job(
-      position: fields[0] as String,
-      companyName: fields[1] as String,
-      jobLocation: fields[2] as String,
-      jobStatus: fields[3] as String,
-      jobType: fields[4] as String,
-      jobDate: fields[5] as DateTime,
+      id: fields[0] as String?,
+      position: fields[1] as String,
+      companyName: fields[2] as String,
+      jobLocation: fields[3] as String,
+      jobStatus: fields[4] as String,
+      jobType: fields[5] as String,
+      jobDate: fields[6] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, Job obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
-      ..write(obj.position)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.companyName)
+      ..write(obj.position)
       ..writeByte(2)
-      ..write(obj.jobLocation)
+      ..write(obj.companyName)
       ..writeByte(3)
-      ..write(obj.jobStatus)
+      ..write(obj.jobLocation)
       ..writeByte(4)
-      ..write(obj.jobType)
+      ..write(obj.jobStatus)
       ..writeByte(5)
+      ..write(obj.jobType)
+      ..writeByte(6)
       ..write(obj.jobDate);
   }
 

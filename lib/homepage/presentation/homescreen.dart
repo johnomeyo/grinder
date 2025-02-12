@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grinder/applied%20jobs/widgets/job_card.dart';
+// import 'package:grinder/applied%20jobs/widgets/job_card.dart';
 import 'package:grinder/homepage/widgets/bar_chart.dart';
 import 'package:grinder/homepage/widgets/line_chart.dart';
 import 'package:grinder/homepage/widgets/statistics_widget.dart';
@@ -26,15 +26,15 @@ class Homescreen extends StatelessWidget {
                     const HeaderWidget(),
                     StatisticsWidget(),
                     TextHeader(text: "Recently Applied"),
-                    JobCard(
-                      company: 'Lumis Softwares',
-                      position: 'Flutter Developer',
-                      date: DateTime.now(),
-                      location: 'Remote',
-                      jobType: 'Full-time',
-                      status: 'Applied',
-                      onEdit: () {},
-                    ),
+                    // JobCard(
+                    //   company: 'Lumis Softwares',
+                    //   position: 'Flutter Developer',
+                    //   date: DateTime.now(),
+                    //   location: 'Remote',
+                    //   jobType: 'Full-time',
+                    //   status: 'Applied',
+                    //   onEdit: () {},
+                    // ),
                     TextHeader(text: "Application Outcomes"),
                     ApplicationStatsChart(),
                     TextHeader(text: "Average Response Time"),

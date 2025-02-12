@@ -86,22 +86,29 @@ class _AppliedJobsPageState extends State<AppliedJobsPage> {
               },
             ),
             Expanded(
-              child: filteredJobs.isEmpty
-                  ? const Center(child: Text("No jobs found."))
-                  : ListView.builder(
-                      itemCount: filteredJobs.length,
-                      itemBuilder: (context, index) {
-                        var job = filteredJobs[index];
-                        return JobCard(
+                child: filteredJobs.isEmpty
+                    ? const Center(child: Text("No jobs found."))
+                    : ListView.builder(
+                        itemCount: filteredJobs.length,
+                        itemBuilder: (context, index) {
+                          var job = filteredJobs[index];
+
+                          return JobCard(
+                            id: job.id, // Pass job ID
                             company: job.companyName,
                             position: job.position,
                             date: job.jobDate,
                             location: job.jobLocation,
                             jobType: job.jobType,
-                            status: job.jobStatus); // Show filtered job cards
-                      },
-                    ),
-            ),
+                            status: job.jobStatus,
+                            onTap: () {
+                              setState(() {
+                                _loadJobs(); // Reload jobs after edit
+                              });
+                            },
+                          );
+                        },
+                      )),
           ],
         ),
       ),

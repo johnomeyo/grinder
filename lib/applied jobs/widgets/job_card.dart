@@ -1,27 +1,135 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:hive/hive.dart';
 
-class JobCard extends StatelessWidget {
+class JobCard extends StatefulWidget {
+  final String id;
   final String company;
   final String position;
   final DateTime date;
   final String location;
   final String jobType;
   final String status;
-  final VoidCallback? onEdit;
   final VoidCallback? onTap;
 
   const JobCard({
     super.key,
+    required this.id,
     required this.company,
     required this.position,
     required this.date,
     required this.location,
     required this.jobType,
     required this.status,
-    this.onEdit,
     this.onTap,
   });
+
+  @override
+  _JobCardState createState() => _JobCardState();
+}
+
+class _JobCardState extends State<JobCard> {
+  late String company;
+  late String position;
+  late DateTime date;
+  late String location;
+  late String jobType;
+  late String status;
+
+  final List<String> jobStatusOptions = ['Applied', 'Interviewing', 'Accepted', 'Rejected'];
+  final List<String> jobTypeOptions = ['Full-time', 'Part-time', 'Contract', 'Internship'];
+
+  @override
+  void initState() {
+    super.initState();
+    company = widget.company;
+    position = widget.position;
+    date = widget.date;
+    location = widget.location;
+    jobType = widget.jobType;
+    status = widget.status;
+  }
+
+  Future<void> _updateJobInHive() async {
+    var box = await Hive.openBox('jobs');
+    await box.put(widget.id, {
+      'company': company,
+      'position': position,
+      'date': date.toIso8601String(),
+      'location': location,
+      'jobType': jobType,
+      'status': status,
+    });
+  }
+
+  void _showEditDialog() {
+    TextEditingController companyController = TextEditingController(text: company);
+    TextEditingController positionController = TextEditingController(text: position);
+    TextEditingController locationController = TextEditingController(text: location);
+
+    String selectedStatus = status;
+    String selectedJobType = jobType;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Edit Job Details"),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(controller: companyController, decoration: const InputDecoration(labelText: "Company")),
+                TextField(controller: positionController, decoration: const InputDecoration(labelText: "Position")),
+                TextField(controller: locationController, decoration: const InputDecoration(labelText: "Location")),
+                DropdownButtonFormField<String>(
+                  value: selectedJobType,
+                  decoration: const InputDecoration(labelText: "Job Type"),
+                  items: jobTypeOptions.map((type) {
+                    return DropdownMenuItem(value: type, child: Text(type));
+                  }).toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      selectedJobType = value;
+                    }
+                  },
+                ),
+                DropdownButtonFormField<String>(
+                  value: selectedStatus,
+                  decoration: const InputDecoration(labelText: "Status"),
+                  items: jobStatusOptions.map((status) {
+                    return DropdownMenuItem(value: status, child: Text(status));
+                  }).toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      selectedStatus = value;
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
+            ElevatedButton(
+              onPressed: () async {
+                setState(() {
+                  company = companyController.text;
+                  position = positionController.text;
+                  location = locationController.text;
+                  jobType = selectedJobType;
+                  status = selectedStatus;
+                });
+                await _updateJobInHive();
+                Navigator.pop(context);
+              },
+              child: const Text("Save"),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +146,8 @@ class JobCard extends StatelessWidget {
             children: [
               _buildHeader(theme),
               const SizedBox(height: 12),
-              Text(
-                company,
-                style: theme.textTheme.titleMedium
-                    ?.copyWith(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                position,
-                style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
-              ),
+              Text(company, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+              Text(position, style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey)),
               const SizedBox(height: 12),
               _buildDetailsRow(),
             ],
@@ -56,7 +157,6 @@ class JobCard extends StatelessWidget {
     );
   }
 
-  /// Builds the top row containing the avatar, job status, and edit button.
   Widget _buildHeader(ThemeData theme) {
     return Row(
       children: [
@@ -64,8 +164,7 @@ class JobCard extends StatelessWidget {
           radius: 20,
           backgroundColor: theme.colorScheme.secondary,
           child: Text(company[0].toUpperCase(),
-              style: theme.textTheme.bodyLarge
-                  ?.copyWith(fontWeight: FontWeight.bold)),
+              style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold)),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -84,13 +183,13 @@ class JobCard extends StatelessWidget {
                                 ? Colors.red
                                 : status == "Accepted"
                                     ? Colors.green
-                                    : Colors.grey, // Default color
+                                    : Colors.grey,
                   ),
                 ),
                 child: Text(status),
               ),
               IconButton(
-                onPressed: onEdit,
+                onPressed: _showEditDialog,
                 icon: const Icon(Icons.edit),
                 tooltip: "Edit Job",
               ),
@@ -101,35 +200,23 @@ class JobCard extends StatelessWidget {
     );
   }
 
-  /// Builds the row containing job details (date, location, job type).
   Widget _buildDetailsRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            Icon(Icons.calendar_month_outlined,
-                size: 16, color: Colors.grey[600]),
-            const SizedBox(width: 4),
-            Text(
-              DateFormat('MMMM d, y').format(date),
-              style: TextStyle(fontSize: 14),
-            ),
-          ],
-        ),
+        _buildIconText(Icons.calendar_month_outlined, DateFormat('MMMM d, y').format(date)),
         _buildIconText(Icons.location_on, location),
         _buildIconText(Icons.work_outline, jobType),
       ],
     );
   }
 
-  /// Reusable method to build an icon + text row
   Widget _buildIconText(IconData icon, String text) {
     return Row(
       children: [
         Icon(icon, size: 16, color: Colors.grey[600]),
         const SizedBox(width: 4),
-        Text(text, style: TextStyle(color: Colors.grey[700], fontSize: 14)),
+        Text(text, style: const TextStyle(color: Colors.grey, fontSize: 14)),
       ],
     );
   }
