@@ -24,6 +24,10 @@ class _AppliedJobsPageState extends State<AppliedJobsPage> {
     setState(() {
       data = jobs; // Update the `data` list
     });
+      // Print jobs properly
+  for (var job in data) {
+    print(job.jobStatus);
+  }
   }
 
   int selectedServiceIndex = 0;
