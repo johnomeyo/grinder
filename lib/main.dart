@@ -3,12 +3,16 @@ import 'package:grinder/homepage/presentation/homescreen.dart';
 // import 'package:grinder/homepage.dart';
 import 'package:grinder/models/job_model.dart';
 import 'package:grinder/onboarding/onboarding_screen.dart';
+import 'package:grinder/services/notification_services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'theme.dart'; // Import the theme file
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+//Initialize Notifications
+NotificationService().initNotification();
+
 //Initialize hive
   await Hive.initFlutter();
 //register the adapter

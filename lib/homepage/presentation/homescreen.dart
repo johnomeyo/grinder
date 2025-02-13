@@ -4,8 +4,9 @@ import 'package:grinder/homepage/widgets/bar_chart.dart';
 import 'package:grinder/homepage/widgets/line_chart.dart';
 import 'package:grinder/homepage/widgets/statistics_widget.dart';
 import 'package:grinder/homepage/widgets/text_header.dart';
+import 'package:grinder/services/notification_services.dart';
 import '../widgets/header_widget.dart';
-import '../widgets/add_job_button.dart';
+// import '../widgets/add_job_button.dart';
 
 class Homescreen extends StatelessWidget {
   const Homescreen({super.key});
@@ -26,15 +27,6 @@ class Homescreen extends StatelessWidget {
                     const HeaderWidget(),
                     StatisticsWidget(),
                     TextHeader(text: "Recently Applied"),
-                    // JobCard(
-                    //   company: 'Lumis Softwares',
-                    //   position: 'Flutter Developer',
-                    //   date: DateTime.now(),
-                    //   location: 'Remote',
-                    //   jobType: 'Full-time',
-                    //   status: 'Applied',
-                    //   onEdit: () {},
-                    // ),
                     TextHeader(text: "Application Outcomes"),
                     ApplicationStatsChart(),
                     TextHeader(text: "Average Response Time"),
@@ -46,7 +38,18 @@ class Homescreen extends StatelessWidget {
           },
         ),
       ),
-      floatingActionButton: const AddJobButton(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          NotificationService().showNotification(
+              title: "Hello",
+              body:
+                  "Small steps lead to big opportunities—keep pushing forward!");
+
+                  print("Clicked the show notifications button");
+        },
+        child: Text("Show notification"),
+      ),
+      // floatingActionButton: const AddJobButton(),
     );
   }
 }
